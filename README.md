@@ -15,3 +15,8 @@ npm install
 ```
 npm start
 ```
+
+### Swagger URL
+```
+$host/documentation
+```
