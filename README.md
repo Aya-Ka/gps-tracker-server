@@ -20,3 +20,8 @@ npm start
 ```
 $host/documentation
 ```
+
+### Testing
+```
+npm test
+```
