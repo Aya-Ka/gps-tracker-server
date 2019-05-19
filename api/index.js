@@ -1,6 +1,6 @@
 'use strict';
 
-const config = require('../config');
+const Config = require('../config');
 
 module.exports = function(server) {
     server.route({
@@ -8,9 +8,12 @@ module.exports = function(server) {
         path:'/',
         handler: (request, h) => {
             return {
-                "name": config.name,
-                "version": config.version
+                "name": Config.name,
+                "version": Config.version
             }
+        },
+        options: {
+            tags: ['api']
         }
     });
 }
