@@ -5,4 +5,4 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      - run: docker-compose up
+      - run: docker-compose up -d
