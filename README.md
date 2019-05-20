@@ -6,14 +6,17 @@ node.js (https://nodejs.org/en/)
 
 npm (https://www.npmjs.com/)
 
-### Installing
+### Lanuching API server without Docker
 ```
 npm install
 ```
-
-### Lanuching API server
 ```
 npm start
+```
+
+### Lanuching API server Docker
+```
+docker-compose up
 ```
 
 ### Swagger URL
