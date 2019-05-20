@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "lab -v **/*.test.js -I 'Reflect,core,_babelPolyfill,regeneratorRuntime,__core-js_shared__'"
+    "test": "lab -v **/*.test.js -I 'Reflect,core,_babelPolyfill,regeneratorRuntime,__core-js_shared__'",
+    "lint": "lab -dL --lint-fix -I 'Reflect,core,_babelPolyfill,regeneratorRuntime,__core-js_shared__'"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,8 @@
   },
   "devDependencies": {
     "@hapi/code": "^5.3.1",
+    "@hapi/eslint-config-hapi": "^12.1.0",
+    "@hapi/eslint-plugin-hapi": "^4.3.3",
     "@hapi/lab": "^19.0.1"
   }
 }
