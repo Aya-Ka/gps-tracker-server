@@ -25,3 +25,8 @@ $host/documentation
 ```
 npm test
 ```
+
+### Linter
+```
+npm run lint
+```
