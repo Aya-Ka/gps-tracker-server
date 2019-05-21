@@ -21,3 +21,11 @@ jobs:
       - run:
           name: test
           command: npm test
+      - setup_remote_docker
+      - run:
+          name: build and publish docker image
+          command: |
+            docker-compose build
+            docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PWD
+            docker tag gpa-tracker-api:latest $DOCKERHUB_USERNAME/$DOCKERHUB_REPONAME:latest
+            docker push $DOCKERHUB_USERNAME/$DOCKERHUB_REPONAME:latest

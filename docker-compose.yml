@@ -1,6 +1,7 @@
 version: '3'
 services:
   api:
+    image: gpa-tracker-api:latest
     build:
       context: .
       dockerfile: ./Dockerfile
