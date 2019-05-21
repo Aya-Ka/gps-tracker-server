@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "lab -v **/*.test.js -I 'Reflect,core,_babelPolyfill,regeneratorRuntime,__core-js_shared__'",
+    "test": "lab -v **/*.test.js -C --coverage-all -I 'Reflect,core,_babelPolyfill,regeneratorRuntime,__core-js_shared__'",
     "lint": "lab -dL --lint-fix -I 'Reflect,core,_babelPolyfill,regeneratorRuntime,__core-js_shared__'"
   },
   "repository": {
