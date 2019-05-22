@@ -1,8 +1,74 @@
-version: 2
+version: 2.1
+executors:
+  docker-publisher:
+    environment:
+          IMAGE_NAME: gpa-tracker-api
+    docker:
+      - image: circleci/buildpack-deps:stretch
 jobs:
   build:
+    executor: docker-publisher
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build Docker Image
+          command: docker-compose build
+      - run:
+          name: Archive Docker image
+          command: docker save -o image.tar $IMAGE_NAME
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./image.tar
+  test:
+    working_directory: ~/repo
     docker:
       - image: circleci/node:11
     steps:
       - checkout
-      - run: echo "A first hello"
+      - run:
+          name: update-npm
+          command: 'sudo npm install -g npm@latest'
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: install-npm-wee
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: test
+          command: npm test
+  publish-latest:
+    executor: docker-publisher
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - setup_remote_docker
+      - run:
+          name: Load archived Docker image
+          command: docker load -i /tmp/workspace/image.tar
+      - run:
+          name: Publish Docker Image
+          command: |
+            docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PWD
+            docker tag $IMAGE_NAME:latest $DOCKERHUB_USERNAME/$DOCKERHUB_REPONAME:latest
+            docker push $DOCKERHUB_USERNAME/$DOCKERHUB_REPONAME:latest
+workflows:
+  version: 2
+  build-test-and-publish:
+    jobs:
+      - test
+      - build:
+          filters:
+            branches:
+              only: master
+      - publish-latest:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
